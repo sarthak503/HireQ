@@ -1,8 +1,6 @@
 import React from 'react';
-import '../../src/App.css'
-import Icon from "react-crud-icons";
-
-// import "react-crud-icons/dist/react-crud-icons.css";
+import '../../src/App.css'; // Importing CSS file for styling
+import Icon from "react-crud-icons"; // Importing icons library
 
 function UserTable({
   currentUsers,
@@ -21,6 +19,7 @@ function UserTable({
     <table>
       <thead>
         <tr>
+          {/* Header row */}
           <th>
             {/* Checkbox for select/deselect all */}
             <input
@@ -37,6 +36,7 @@ function UserTable({
         </tr>
       </thead>
       <tbody>
+        {/* Mapping through users and displaying data */}
         {currentUsers.map(user => (
           <tr key={user.id}>
             <td>
@@ -89,12 +89,13 @@ function UserTable({
                 <button className="save" onClick={() => handleSave(user.id)}>Save</button>
               ) : ( 
                 <div className='editBtn'>
+                  {/* Icon for edit */}
                   <Icon
-                  name="edit"
-                  theme="light"
-                  size="medium"
-                  onClick={() => handleEdit(user.id)}
-                />
+                    name="edit"
+                    theme="light"
+                    size="medium"
+                    onClick={() => handleEdit(user.id)}
+                  />
                 </div>
               )}
             </td>
@@ -102,13 +103,14 @@ function UserTable({
               {/* Render Delete button if not in edit mode */}
               {editingId !== user.id && (
                 <div className='delBtn'>
+                  {/* Icon for delete */}
                   <Icon
                     name="delete"
                     theme="light"
                     size="medium"
                     onClick={() => handleDelete(user.id)}
                   />
-              </div>
+                </div>
               )}
             </td>
           </tr>

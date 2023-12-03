@@ -6,16 +6,16 @@ import Pagination from './components/Pagination';
 import EditModal from './components/EditModal';
 
 function AdminDashboard() {
+  // State declarations
   const [users, setUsers] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [usersPerPage] = useState(20);
-
+  const [usersPerPage] = useState(15);
   const [editingId, setEditingId] = useState(null); // Define editingId state
   const [editedFields, setEditedFields] = useState({}); // Define editedFields state
 
-
+  // Fetching data from the API
   useEffect(() => {
     axios.get('https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json')
       .then(response => {
@@ -26,9 +26,8 @@ function AdminDashboard() {
       });
   }, []);
 
-
-   // Search functionality
-   const filteredUsers = users.filter(user => {
+  // Search functionality
+  const filteredUsers = users.filter(user => {
     return (
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(searchTerm.toLowerCase())
@@ -47,6 +46,7 @@ function AdminDashboard() {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  // Function to handle checkbox change
   const handleCheckboxChange = (userId) => {
     const newSelectedRows = [...selectedRows];
     if (newSelectedRows.includes(userId)) {
@@ -57,7 +57,7 @@ function AdminDashboard() {
     setSelectedRows(newSelectedRows);
   };
 
-
+  // Modal related state and functions
   const [editedUser, setEditedUser] = useState(null);
 
   const openEditModal = (userId) => {
@@ -82,8 +82,6 @@ function AdminDashboard() {
     setUsers(updatedUsers);
     closeEditModal();
   };
-
-
 
   // Function to save edited fields for a specific row
   const handleSave = (userId) => {
@@ -111,6 +109,7 @@ function AdminDashboard() {
   const handleDelete = (userId) => {
     const updatedUsers = users.filter(user => user.id !== userId);
     setUsers(updatedUsers);
+    alert("Row Deleted!")
   };
 
   const handleEdit = (userId) => {

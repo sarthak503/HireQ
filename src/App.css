@@ -1,6 +1,7 @@
 .App {
   text-align: center;
   font-family: "JetBrains Mono",monospace;
+
 }
 
 .App-logo {
@@ -40,8 +41,10 @@
 
 
 .container{
-  background-color: aliceblue;
+  background-color: #cef4ff;
   font-size: 15px;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 .container>table{
   display: flex;
@@ -49,19 +52,24 @@
   justify-content: space-between;
 }
 thead>tr{
-  background-color: rgb(255, 150, 127);
+  background-color: rgb(7, 27, 243);
+  color: wheat;
   display: flex;
+  justify-content: center;
   /* justify-content: space-between; */
 }
 tbody>tr{
+  background-color:rgb(167, 216, 254);
   display: flex;
+  margin-top:  10px;
+  margin-bottom: 10px;
 }
 th,td{
   width: 50%;
   /* border: 1px solid red ; */
 }
 th{
-  border: 1px solid rgb(255, 0, 0) ;
+  border: 1px solid rgb(187, 187, 187) ;
 }
 .action{
   padding-left: 9%;
@@ -71,7 +79,7 @@ th{
 tr{
   display: flex;
   justify-content: flex-start;
-  background-color:rgb(254, 167, 212);
+  /* background-color:rgb(254, 167, 212); */
   text-align: center;
 }
 tr> td + .editBtn{
@@ -94,15 +102,53 @@ tr> td + .editBtn{
 }
 .inpbox{
   width: 500px;
-  height: 20px;
+  border-radius: 1%;
+  height: 40px;
+  padding-left: 10px;
   border: none;
+  outline: 0;
+  background-color: #ffffff;
+  font-family: "JetBrains Mono",monospace;
+}
+
+input{
+  font-family: "JetBrains Mono",monospace;
+  border: none;
+}
+input:focus:placeholder-shown {
+    background-color:rgba(1, 2, 22, 0.965);
+  color:white;
+  font-family: "JetBrains Mono",monospace;
+  /* Styles when the input is focused and no text is entered */
+}
+
+/* Styles when input is focused and not empty */
+input:focus:not(:placeholder-shown) {
+  /* Styles when the input is focused and has text entered */
+  background-color:rgba(229, 244, 116, 0.965);
+  border: none;
+  font-family: "JetBrains Mono",monospace;
+
+}
+.inpbox:focus:placeholder-shown {
+  background-color:rgba(219, 239, 255, 0.965);
+  color: white;
+  border: none;
+}
+.searchicon{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
 }
 .pagino{
   display: flex;
   justify-content: center;
-  margin: 100px;
+  margin: 10px;
 }
-
+td{
+  font-family: "JetBrains Mono",monospace;
+}
 .pagino > button{
   margin: 10px;
 }
@@ -119,7 +165,7 @@ tr> td + .editBtn{
   cursor: pointer;
   display: inline-flex;
   font-family: "JetBrains Mono",monospace;
-  height: 48px;
+  height: 30px;
   justify-content: center;
   line-height: 1;
   list-style: none;
@@ -150,4 +196,59 @@ tr> td + .editBtn{
 .button-29:active {
   box-shadow: #3c4fe0 0 3px 7px inset;
   transform: translateY(2px);
+}
+
+
+.modal{
+  font-family: "JetBrains Mono",monospace;
+}
+.editform{
+  font-family: "JetBrains Mono",monospace;
+}
+.save, .cancel{
+  align-items: center;
+  appearance: none;
+  background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+  border: 0;
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono",monospace;
+  height: 20px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow .15s,transform .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow,transform;
+  font-size: 12px;
+}
+
+span{
+  color: red;
+}
+.footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+  
+}
+
+@media only screen and (max-width: 600px) {
+  p{
+      font-size: 12px;  
+  }
 }

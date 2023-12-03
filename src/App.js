@@ -1,11 +1,13 @@
 import React from 'react';
-import AdminDashboard from './UserList';
 import AdminPage from './AdminPage'
+
+import Footer from './components/Footer';
 
 function App() {
   return (
     <div className="App">
       <AdminPage />
+      <Footer/>
     </div>
   );
 }
