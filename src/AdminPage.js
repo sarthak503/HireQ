@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import UserTable from './components/UserTable';
 import SearchBar from './components/SearchBar';
 import Pagination from './components/Pagination';
-import './App.css'
+import EditModal from './components/EditModal';
 
 function AdminDashboard() {
   const [users, setUsers] = useState([]);
@@ -11,9 +12,8 @@ function AdminDashboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(20);
 
-  // Add new state variables for tracking edited fields
-  const [editingId, setEditingId] = useState(null);
-  const [editedFields, setEditedFields] = useState({});
+  const [editingId, setEditingId] = useState(null); // Define editingId state
+  const [editedFields, setEditedFields] = useState({}); // Define editedFields state
 
 
   useEffect(() => {
@@ -26,8 +26,9 @@ function AdminDashboard() {
       });
   }, []);
 
-  // Search functionality
-  const filteredUsers = users.filter(user => {
+
+   // Search functionality
+   const filteredUsers = users.filter(user => {
     return (
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(searchTerm.toLowerCase())
@@ -45,9 +46,6 @@ function AdminDashboard() {
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  // Rest of the code remains the same for rendering and handling checkboxes, edit, delete functionalities
-
 
   const handleCheckboxChange = (userId) => {
     const newSelectedRows = [...selectedRows];
@@ -85,20 +83,7 @@ function AdminDashboard() {
     closeEditModal();
   };
 
-  // Implement logic for select/deselect all displayed rows
-  const handleSelectAll = () => {
-    if (selectedRows.length === currentUsers.length) {
-      setSelectedRows([]);
-    } else {
-      const allUserIds = currentUsers.map(user => user.id);
-      setSelectedRows(allUserIds);
-    }
-  };
 
-  // Function to enable editing for a specific row
-  const handleEdit = (userId) => {
-    setEditingId(userId);
-  };
 
   // Function to save edited fields for a specific row
   const handleSave = (userId) => {
@@ -128,103 +113,53 @@ function AdminDashboard() {
     setUsers(updatedUsers);
   };
 
+  const handleEdit = (userId) => {
+    setEditingId(userId);
+  };
+
+  // Function to handle select/deselect all displayed rows
+  const handleSelectAll = () => {
+    if (selectedRows.length === currentUsers.length) {
+      setSelectedRows([]);
+    } else {
+      const allUserIds = currentUsers.map(user => user.id);
+      setSelectedRows(allUserIds);
+    }
+  };
+
+
   return (
     <div className='container'>
       <h1>Admin Dashboard</h1>
       <SearchBar searchTerm={searchTerm} handleSearch={handleSearch} />
-     
-
-
-      <table>
-        <thead>
-          <tr>
-          <th>
-            <input
-              type="checkbox"
-              onChange={handleSelectAll}
-              checked={selectedRows.length === currentUsers.length && currentUsers.length !== 0}
-              indeterminate={selectedRows.length !== currentUsers.length && selectedRows.length !== 0}
-            />
-          </th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th colspan="2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-        {currentUsers.map(user => (
-          <tr key={user.id}>
-            <td>
-              <input
-                type="checkbox"
-                checked={selectedRows.includes(user.id)}
-                onChange={() => handleCheckboxChange(user.id)}
-              />
-            </td>
-       
-            <td>
-              {editingId === user.id ? (
-                <input
-                  type="text"
-                  value={editedFields.name || user.name}
-                  onChange={(e) => handleFieldChange('name', e.target.value)}
-                />
-              ) : (
-                user.name
-              )}
-            </td>
-            <td>
-              {editingId === user.id ? (
-                <input
-                  type="text"
-                  value={editedFields.email || user.email}
-                  onChange={(e) => handleFieldChange('email', e.target.value)}
-                />
-              ) : (
-                user.email
-              )}
-            </td>
-            <td>
-              {editingId === user.id ? (
-                <input
-                  type="text"
-                  value={editedFields.role || user.role}
-                  onChange={(e) => handleFieldChange('role', e.target.value)}
-                />
-              ) : (
-                user.role
-              )}
-            </td>
-
-            {/* // Edit button to trigger editing */}
-            <td>
-              {editingId === user.id ? (
-                <button className="save" onClick={() => handleSave(user.id)}>Save</button>
-              ) : (
-                <button className="edit" onClick={() => handleEdit(user.id)}>Edit</button>
-              )}
-            </td>
-            <td>
-              {editingId !== user.id && (
-                <button className="delete" onClick={() => handleDelete(user.id)}>Delete</button>
-              )}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-      </table>
-
-
+      <UserTable
+        currentUsers={currentUsers}
+        selectedRows={selectedRows}
+        handleCheckboxChange={handleCheckboxChange}
+        editingId={editingId}
+        editedFields={editedFields}
+        handleEdit={handleEdit}
+        handleSave={handleSave}
+        handleDelete={handleDelete}
+        handleFieldChange={handleFieldChange}
+        openEditModal={openEditModal}
+        handleSelectAll={handleSelectAll}
+      />
       <Pagination
         currentPage={currentPage}
         paginate={paginate}
         filteredUsers={filteredUsers}
         usersPerPage={usersPerPage}
       />
+      {editedUser && (
+        <EditModal
+          editedUser={editedUser}
+          updateUser={updateUser}
+          closeEditModal={closeEditModal}
+        />
+      )}
     </div>
   );
 }
 
 export default AdminDashboard;
-
